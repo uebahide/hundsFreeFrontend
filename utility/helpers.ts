@@ -110,18 +110,18 @@ export const loadName = async () => {
   }
 };
 
-  export const loadLocation = async () => {
-    try {
-      const location = await AsyncStorage.getItem('LOCATION');
-      if (location !== null) {
-        // IPアドレスが保存されている場合は使用する
-        return location;
-      }
-      return "";
-    } catch (error) {
-      console.error('Got error during getting the server port:', error);
+export const loadLocation = async () => {
+  try {
+    const location = await AsyncStorage.getItem('LOCATION');
+    if (location !== null) {
+      // IPアドレスが保存されている場合は使用する
+      return location;
     }
-  };
+    return "";
+  } catch (error) {
+    console.error('Got error during getting the server port:', error);
+  }
+};
 
 export async function getServerUrl(){
   const SERVER_IP = await loadServerIP();
