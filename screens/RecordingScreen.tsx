@@ -76,25 +76,25 @@ const RecordingScreen = ({ navigation, route }) => {
     getServerUrl().then(url => {
       const socketConnection = io(url);
   
-      socketConnection.on("file_saved", (data) => {
-        console.log("File saved on server:", data);
-        const responseData = data.data;
+      // socketConnection.on("file_saved", (data) => {
+      //   console.log("File saved on server:", data);
+      //   const responseData = data.data;
   
-        if (
-          responseData &&
-          typeof responseData === "object" &&
-          "hun" in responseData &&
-          "eng" in responseData
-        ) {
-          navigation.navigate("EditScreen", {
-            responseData: {
-              hun: responseData.hun,
-              eng: responseData.eng,
-            },
-            navigateTo: "RecordingScreen",
-          });
-        }
-      });
+      //   if (
+      //     responseData &&
+      //     typeof responseData === "object" &&
+      //     "hun" in responseData &&
+      //     "eng" in responseData
+      //   ) {
+      //     navigation.navigate("EditScreen", {
+      //       responseData: {
+      //         hun: responseData.hun,
+      //         eng: responseData.eng,
+      //       },
+      //       navigateTo: "RecordingScreen",
+      //     });
+      //   }
+      // });
   
       return () => {
         socketConnection.disconnect();
@@ -169,12 +169,22 @@ const RecordingScreen = ({ navigation, route }) => {
       const responseData = await response.json();
       const responseMessageData = responseData.message;
       setResponseMessage(responseMessageData);
-      console.log("responseMessage ", responseMessage);
+      console.log("responseData ");
+      console.log(responseData);
 
       await FileSystem.deleteAsync(audioUri, { idempotent: true });
       console.log("Local audio file deleted after successful upload.");
 
       setIsLoading(false);
+
+
+      navigation.navigate("EditScreen", {
+        responseData: {
+          hun: responseData.hun,
+          eng: responseData.eng,
+        },
+        navigateTo: "RecordingScreen",
+      });
     } catch (e) {
       console.log("Error fetching data:", e);
       saveAudioLocally(audioUri);
