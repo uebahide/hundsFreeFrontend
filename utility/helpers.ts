@@ -123,10 +123,17 @@ export const loadLocation = async () => {
   }
 };
 
-export async function getServerUrl(){
-  const SERVER_IP = await loadServerIP();
-  const SERVER_PORT = await loadPort();
-  return `http://${SERVER_IP}:${SERVER_PORT}`
+export async function getServerUrl() {
+  // read url-config.json file
+  const url_config = require('../url-config.json');
+
+  //get ip and port from user profile
+  const SERVER_IP = await loadServerIP() || "";
+  const SERVER_PORT = await loadPort() || "";
+  const suffix = url_config[SERVER_IP]?.[SERVER_PORT]?.suffix || "";
+
+  // generate url
+  return `https://${SERVER_IP}/${suffix}`;
 }
 
 export async function getName(){
