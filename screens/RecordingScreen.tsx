@@ -72,37 +72,37 @@ const RecordingScreen = ({ navigation, route }) => {
     };
   }, []);
 
-  useEffect(() => {
-    getServerUrl().then(url => {
-      const socketConnection = io(url);
+  // useEffect(() => {
+  //   getServerUrl().then(url => {
+  //     const socketConnection = io(url);
   
-      // socketConnection.on("file_saved", (data) => {
-      //   console.log("File saved on server:", data);
-      //   const responseData = data.data;
+  //     socketConnection.on("file_saved", (data) => {
+  //       console.log("File saved on server:", data);
+  //       const responseData = data.data;
   
-      //   if (
-      //     responseData &&
-      //     typeof responseData === "object" &&
-      //     "hun" in responseData &&
-      //     "eng" in responseData
-      //   ) {
-      //     navigation.navigate("EditScreen", {
-      //       responseData: {
-      //         hun: responseData.hun,
-      //         eng: responseData.eng,
-      //       },
-      //       navigateTo: "RecordingScreen",
-      //     });
-      //   }
-      // });
+  //       if (
+  //         responseData &&
+  //         typeof responseData === "object" &&
+  //         "hun" in responseData &&
+  //         "eng" in responseData
+  //       ) {
+  //         navigation.navigate("EditScreen", {
+  //           responseData: {
+  //             hun: responseData.hun,
+  //             eng: responseData.eng,
+  //           },
+  //           navigateTo: "RecordingScreen",
+  //         });
+  //       }
+  //     });
   
-      return () => {
-        socketConnection.disconnect();
-      };
-    }).catch(error => {
-      console.error("Error while resolving serverUrl:", error);
-    });
-  }, []);
+  //     return () => {
+  //       socketConnection.disconnect();
+  //     };
+  //   }).catch(error => {
+  //     console.error("Error while resolving serverUrl:", error);
+  //   });
+  // }, []);
   
 
   const fetchData = async (audioUri: string) => {
