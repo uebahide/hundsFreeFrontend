@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -7,13 +7,35 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
+  ScrollView
 } from "react-native";
-import { Button, useTheme } from "react-native-paper";
-import { getServerUrl, loadLocation, loadName } from "../utility/helpers";
+import { Button, useTheme, Checkbox, Text} from "react-native-paper";
+import { getServerUrl, loadLabels, loadLocation, loadName } from "../utility/helpers";
+import CheckboxList from "../components/CheckBoxList";
 
 
 
 const EditScreen = ({ route, navigation }) => {
+  //manage labels
+  const [labels, setLabels] = useState([]);
+  //get labels by using helper function
+  useEffect(() => {
+    const labels = loadLabels(); // no need `await`
+    setLabels(labels);
+  }, []);
+  
+  // manage checked state
+  const [checkedLabels, setcheckedLabels] = useState(
+    labels.reduce((acc, q) => ({ ...acc, [q.label]: false }), {})
+  );
+
+  // toggel checked state
+  const toggleCheckbox = (label) => {
+    setcheckedLabels((prev) => ({ ...prev, [label]: !prev[label] }));
+  };
+
+  const [hunHeight, setHunHeight] = useState(40); 
+  const [engHeight, setEngHeight] = useState(40); 
   const [originalHunText, setOriginalHunText] = useState(
     route.params.responseData.hun
   );
@@ -30,26 +52,24 @@ const EditScreen = ({ route, navigation }) => {
   const handleSave = async () => {
     try {
       const url = await getServerUrl();
+      const selectedLabels = Object.keys(checkedLabels).filter((key) => checkedLabels[key])
 
       const payload = {
         originalHun: originalHunText,
         originalEng: originalEngText,
         editedHun: hunText,
         editedEng: engText,
-      };
-
-      const form_data = {
-        payload: payload,
         name: await loadName(),
-        location: await loadLocation()
-      }
+        location: await loadLocation(),
+        labels: selectedLabels
+      };
 
       const response = await fetch(`${url}/submit-form`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(form_data),
+        body: JSON.stringify(payload),
       });
 
       if (response.ok) {
@@ -72,22 +92,32 @@ const EditScreen = ({ route, navigation }) => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <ScrollView 
+          contentContainerStyle={{ flexGrow: 1 }} 
+          keyboardShouldPersistTaps="handled"
+        >
         <View style={styles.container}>
           <View style={styles.textfieldContainer}>
             <TextInput
-              style={styles.input}
+              style={[styles.input, {height: hunHeight}]}
               value={hunText}
               onChangeText={setHunText}
               multiline
+              onContentSizeChange={(event) => 
+                setHunHeight(event.nativeEvent.contentSize.height)
+              }
             />
             <TextInput
-              style={styles.input}
+              style={[styles.input, {height: engHeight}]}
               value={engText}
               onChangeText={setEngText}
               multiline
+              onContentSizeChange={(event) => 
+                setEngHeight(event.nativeEvent.contentSize.height)
+              }
             />
           </View>
-
+          <CheckboxList labels={labels} checkedLabels={checkedLabels} toggleCheckbox={toggleCheckbox}/>
           <Button
             style={styles.button}
             onPress={handleSave}
@@ -98,6 +128,7 @@ const EditScreen = ({ route, navigation }) => {
             Save
           </Button>
         </View>
+        </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );
