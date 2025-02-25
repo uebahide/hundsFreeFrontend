@@ -71,6 +71,15 @@ export const listAudioFiles = async (): Promise<string[]> => {
   }
 };
 
+export const loadLabels = () => {
+  try {
+    const labels_data = require("../assets/labels.json");
+    return labels_data
+  } catch (error) {
+    console.error("Error loading JSON:", error);
+  }
+}
+
 export const loadServerIP = async () => {
   try {
     const ipAddress = await AsyncStorage.getItem('SERVER_IP');
