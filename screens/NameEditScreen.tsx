@@ -1,9 +1,8 @@
 import * as React from 'react';
 import { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Menu } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Button, useTheme, TextInput, Text } from "react-native-paper";
+import { Button, useTheme, TextInput, Text, Menu } from "react-native-paper";
 import { loadName } from '../utility/helpers';
 
 

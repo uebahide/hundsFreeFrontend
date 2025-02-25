@@ -1,6 +1,8 @@
 import * as FileSystem from "expo-file-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+const labelFileUri = FileSystem.documentDirectory + "labels.json";
+
 export async function createFilename() {
   const currentDate = new Date();
   const formattedDate = `${currentDate.getFullYear()}_${(
@@ -71,12 +73,38 @@ export const listAudioFiles = async (): Promise<string[]> => {
   }
 };
 
-export const loadLabels = () => {
+export const loadLabels = async () => {
   try {
-    const labels_data = require("../assets/labels.json");
-    return labels_data
+    const fileExists = await FileSystem.getInfoAsync(labelFileUri);
+
+    if (!fileExists.exists) {
+      console.log("labels.json does not exist. Returning empty list.");
+      return []; // return empty list if file does not exist
+    }
+
+    const jsonString = await FileSystem.readAsStringAsync(labelFileUri, {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
+
+    return JSON.parse(jsonString); // return as json
   } catch (error) {
-    console.error("Error loading JSON:", error);
+    console.error("Failed to load labels:", error);
+    return [];
+  }
+};
+
+export const addLabel = async (label) => {
+  try{
+    const labels = await loadLabels()
+    const updatedLabels = [...labels, label];
+    await FileSystem.writeAsStringAsync(labelFileUri, JSON.stringify(updatedLabels), {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
+    console.log("Label added successfully!");
+
+  }catch(error){
+    console.error("Failed to add label:", error);
+    return null;
   }
 }
 

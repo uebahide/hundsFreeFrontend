@@ -34,6 +34,15 @@ const StartScreen = ({ navigation }) => {
       >
         Profile
       </Button>
+      <Button
+        mode="outlined"
+        uppercase
+        onPress={() => navigation.navigate("LabelListScreen")}
+        textColor={"white"}
+        style={styles.button}
+      >
+        Labels
+      </Button>
     </View>
   );
 };
