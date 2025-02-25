@@ -7,7 +7,7 @@ import {
 } from "react-native";
 import { Button, useTheme } from "react-native-paper";
 import SwipeableListItem from "../components/SwipeableListItem";
-import { loadLabels } from "../utility/helpers";
+import { loadLabels, updateLabels } from "../utility/helpers";
 import { useFocusEffect } from "@react-navigation/native";
 
 const LabelListScreen = ({navigation}) => {
@@ -28,9 +28,16 @@ const LabelListScreen = ({navigation}) => {
     loadLabelsWithHelper();
   })
 
-  const handleDeleteList = (item) => {
-
-  }
+  const handleDeleteList = async (labelToDelete) => {
+    setLabels((prev) => {
+      const updatedLabels = prev.filter((label) => label.id !== labelToDelete.id);
+      
+      updateLabels(updatedLabels).catch(error => console.error(error));
+  
+      return updatedLabels;
+    });
+  };
+  
 
   return (
     <View style={styles.container}>

@@ -104,7 +104,16 @@ export const addLabel = async (label) => {
 
   }catch(error){
     console.error("Failed to add label:", error);
-    return null;
+  }
+}
+
+export const updateLabels = async (updatedLabels) => {
+  try{
+    await FileSystem.writeAsStringAsync(labelFileUri, JSON.stringify(updatedLabels), {
+      encoding: FileSystem.EncodingType.UTF8,
+    });
+  }catch(error){
+    console.error("Failed to add label:", error);
   }
 }
 
