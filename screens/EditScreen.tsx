@@ -20,8 +20,16 @@ const EditScreen = ({ route, navigation }) => {
   const [labels, setLabels] = useState([]);
   //get labels by using helper function
   useEffect(() => {
-    const labels = loadLabels(); // no need `await`
-    setLabels(labels);
+    const loadLabelsWithHelper = async () => {
+      try{
+        const labels = await loadLabels(); 
+        setLabels(labels);
+      }catch(error){
+        console.log(error)
+      }
+    }
+
+    loadLabelsWithHelper()
   }, []);
   
   // manage checked state
