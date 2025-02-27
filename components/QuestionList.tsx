@@ -6,10 +6,11 @@ import { Picker } from "@react-native-picker/picker";
 // question list (import from assets/questions.json)
 
 const QuestionList = ({changeAnswer, questions}) => {
+  if(questions.length === 0) return null
   return (
     <View style={styles.container}>
       <View style={styles.innerContainer}>
-        {questions.map((q) =>{
+        {questions.map((q, index) =>{
           if(q.type=='button'){
             return (
                 <View key={q.id} style={styles.selectBoxContainer}>
@@ -20,10 +21,10 @@ const QuestionList = ({changeAnswer, questions}) => {
                     onValueChange={(newAnswer) => changeAnswer(q.id, newAnswer)}
                     style={styles.picker}
                   >
-                    <Picker.Item key={q.id} style={styles.pickerItem} label="" value=""/>
+                    <Picker.Item style={styles.pickerItem} label="" value=""/>
                     {q.possible_answers.map((possible_answer) => {
                       return(
-                        <Picker.Item style={styles.pickerItem} label={possible_answer} value={possible_answer} />
+                        <Picker.Item key={q.id} style={styles.pickerItem} label={possible_answer} value={possible_answer} />
                       )
                     })}
                   </Picker>
