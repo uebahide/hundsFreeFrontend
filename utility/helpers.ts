@@ -1,7 +1,7 @@
 import * as FileSystem from "expo-file-system";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const labelFileUri = FileSystem.documentDirectory + "labels.json";
+const questionsFileUri = "../assets/questions.json" 
 
 export async function createFilename() {
   const currentDate = new Date();
@@ -73,49 +73,14 @@ export const listAudioFiles = async (): Promise<string[]> => {
   }
 };
 
-export const loadLabels = async () => {
+export const loadQuestions = () => {
   try {
-    const fileExists = await FileSystem.getInfoAsync(labelFileUri);
-
-    if (!fileExists.exists) {
-      console.log("labels.json does not exist. Returning empty list.");
-      return []; // return empty list if file does not exist
-    }
-
-    const jsonString = await FileSystem.readAsStringAsync(labelFileUri, {
-      encoding: FileSystem.EncodingType.UTF8,
-    });
-
-    return JSON.parse(jsonString); // return as json
+    return require(questionsFileUri)
   } catch (error) {
-    console.error("Failed to load labels:", error);
+    console.error("Failed to load questions:", error);
     return [];
   }
 };
-
-export const addLabel = async (label) => {
-  try{
-    const labels = await loadLabels()
-    const updatedLabels = [...labels, label];
-    await FileSystem.writeAsStringAsync(labelFileUri, JSON.stringify(updatedLabels), {
-      encoding: FileSystem.EncodingType.UTF8,
-    });
-    console.log("Label added successfully!");
-
-  }catch(error){
-    console.error("Failed to add label:", error);
-  }
-}
-
-export const updateLabels = async (updatedLabels) => {
-  try{
-    await FileSystem.writeAsStringAsync(labelFileUri, JSON.stringify(updatedLabels), {
-      encoding: FileSystem.EncodingType.UTF8,
-    });
-  }catch(error){
-    console.error("Failed to add label:", error);
-  }
-}
 
 export const loadServerIP = async () => {
   try {
@@ -189,4 +154,8 @@ export async function getName(){
 export async function getLocation(){
   const location = await loadLocation();
   return location;
+}
+
+export function isAllQuestionAnswered(questionAndAnswers){
+  return !Object.values(questionAndAnswers).some(answer => answer === "" || answer == null)
 }

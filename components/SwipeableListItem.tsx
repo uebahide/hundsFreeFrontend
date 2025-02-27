@@ -13,7 +13,7 @@ import {
 } from "react-native-gesture-handler";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-const SwipeableListItem = ({ item, onDelete, onSend, isLabelList=false}) => {
+const SwipeableListItem = ({ item, onDelete, onSend}) => {
   const renderRightActions = (dragX) => {
     const transDelete = dragX.interpolate({
       inputRange: [0, 50],
@@ -46,19 +46,17 @@ const SwipeableListItem = ({ item, onDelete, onSend, isLabelList=false}) => {
             <FontAwesome name="trash" size={24} color="#fff" />
           </TouchableOpacity>
         </Animated.View>
-        {isLabelList || (
-          <Animated.View
-            style={[
-              styles.actionItem,
-              updateTransition,
-              { backgroundColor: "#a888e6"},
-            ]}
-          >
-            <TouchableOpacity onPress={onSend}>
-              <FontAwesome name="upload" size={24} color="#fff" />
-            </TouchableOpacity>
-          </Animated.View>
-        )}
+        <Animated.View
+          style={[
+            styles.actionItem,
+            updateTransition,
+            { backgroundColor: "#a888e6"},
+          ]}
+        >
+          <TouchableOpacity onPress={onSend}>
+            <FontAwesome name="upload" size={24} color="#fff" />
+          </TouchableOpacity>
+        </Animated.View>
       </View>
     );
   };

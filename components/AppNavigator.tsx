@@ -7,11 +7,11 @@ import AudioListScreen from "../screens/AudioListScreen";
 import EditScreen from "../screens/EditScreen";
 import ProfileScreen from "../screens/ProfileScreen";
 import ServerIpEditScreen from "../screens/ServerIpEditScreen";
-import LabelListScreen from "../screens/LabelListScreen"
+import QuestionScreen from "../screens/QuestionScreen";
 import NameEditScreen from "../screens/NameEditScreen";
 import LocationEditScreen from "../screens/LocationEditScreen";
 import ServerPortEditScreen from "../screens/ServerPortEditScreen";
-import AddLabelScreen from "../screens/AddLabelScreen"
+
 
 const Stack = createNativeStackNavigator();
 
@@ -65,14 +65,9 @@ const AppNavigator = () => {
           options={{title: "LocationEdit"}}
         />
         <Stack.Screen
-          name="LabelListScreen"
-          component={LabelListScreen}
-          options={{title: "Label List"}}
-        />
-        <Stack.Screen
-          name="AddLabelScreen"
-          component={AddLabelScreen}
-          options={{title: "LabelAdd"}}
+          name="QuestionScreen"
+          component={QuestionScreen}
+          options={{title: "Questions"}}
         />
       </Stack.Navigator>
     </NavigationContainer>

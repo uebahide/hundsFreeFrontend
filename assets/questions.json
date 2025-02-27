@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1,
+    "question": "content of the question1",
+    "type": "button",
+    "possible_answers": ["a", "b", "c"],
+    "answer": ""
+  },
+  {
+    "id": 2,
+    "question": "content of the question2",
+    "type": "boolean",
+    "possible_answers": "",
+    "answer": ""
+  },
+  {
+    "id": 3,
+    "question": "content of the question3",
+    "type": "boolean",
+    "possible_answers": "",
+    "answer": ""
+  },
+  {
+    "id": 4,
+    "question": "content of the question4",
+    "type": "textbox",
+    "possible_answers": "",
+    "answer": ""
+  },
+  {
+    "id": 5,
+    "question": "content of the question5",
+    "type": "textbox",
+    "possible_answers": "",
+    "answer": ""
+  },
+  {
+    "id": 6,
+    "question": "content of the question6",
+    "type": "textbox",
+    "possible_answers": "",
+    "answer": ""
+  },
+  {
+    "id": 7,
+    "question": "content of the question7",
+    "type": "textbox",
+    "possible_answers": "",
+    "answer": ""
+  }
+]
