@@ -7,43 +7,14 @@ import {
   Keyboard,
   KeyboardAvoidingView,
   Platform,
-  ScrollView
 } from "react-native";
 import { Button, useTheme, Checkbox, Text} from "react-native-paper";
-import { getServerUrl, loadLabels, loadLocation, loadName } from "../utility/helpers";
-import CheckboxList from "../components/CheckBoxList";
+import { getServerUrl, loadLocation, loadName } from "../utility/helpers";
 
 
 
 const EditScreen = ({ route, navigation }) => {
-  //manage labels
-  const [labels, setLabels] = useState([]);
-  //get labels by using helper function
-  useEffect(() => {
-    const loadLabelsWithHelper = async () => {
-      try{
-        const labels = await loadLabels(); 
-        setLabels(labels);
-      }catch(error){
-        console.log(error)
-      }
-    }
 
-    loadLabelsWithHelper()
-  }, []);
-  
-  // manage checked state
-  const [checkedLabels, setcheckedLabels] = useState(
-    labels.reduce((acc, q) => ({ ...acc, [q.label]: false }), {})
-  );
-
-  // toggel checked state
-  const toggleCheckbox = (label) => {
-    setcheckedLabels((prev) => ({ ...prev, [label]: !prev[label] }));
-  };
-
-  const [hunHeight, setHunHeight] = useState(40); 
-  const [engHeight, setEngHeight] = useState(40); 
   const [originalHunText, setOriginalHunText] = useState(
     route.params.responseData.hun
   );
@@ -58,39 +29,17 @@ const EditScreen = ({ route, navigation }) => {
   const styles = getStyles(theme);
 
   const handleSave = async () => {
-    try {
-      const url = await getServerUrl();
-      const selectedLabels = Object.keys(checkedLabels).filter((key) => checkedLabels[key])
-
-      const payload = {
-        originalHun: originalHunText,
-        originalEng: originalEngText,
-        editedHun: hunText,
-        editedEng: engText,
-        name: await loadName(),
-        location: await loadLocation(),
-        labels: selectedLabels
-      };
-
-      const response = await fetch(`${url}/submit-form`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (response.ok) {
-        navigation.navigate(route.params.navigateTo, {
-          message: "Data sent successfully",
-        });
-      } else {
-        throw new Error("Failed to submit edited data");
-      }
-    } catch (error) {
-      console.log("hello")
-      console.error("Error submitting edited data:", error);
-    }
+      
+    const payload = {
+      originalHun: originalHunText,
+      originalEng: originalEngText,
+      editedHun: hunText,
+      editedEng: engText,
+      name: await loadName(),
+      location: await loadLocation(),
+    };
+    
+    navigation.navigate("QuestionScreen", {payload})
   };
 
   return (
@@ -100,32 +49,21 @@ const EditScreen = ({ route, navigation }) => {
       keyboardVerticalOffset={Platform.OS === "ios" ? 64 : 0}
     >
       <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <ScrollView 
-          contentContainerStyle={{ flexGrow: 1 }} 
-          keyboardShouldPersistTaps="handled"
-        >
         <View style={styles.container}>
           <View style={styles.textfieldContainer}>
             <TextInput
-              style={[styles.input, {height: hunHeight}]}
+              style={[styles.input]}
               value={hunText}
               onChangeText={setHunText}
               multiline
-              onContentSizeChange={(event) => 
-                setHunHeight(event.nativeEvent.contentSize.height)
-              }
             />
             <TextInput
-              style={[styles.input, {height: engHeight}]}
+              style={[styles.input]}
               value={engText}
               onChangeText={setEngText}
               multiline
-              onContentSizeChange={(event) => 
-                setEngHeight(event.nativeEvent.contentSize.height)
-              }
             />
           </View>
-          <CheckboxList labels={labels} checkedLabels={checkedLabels} toggleCheckbox={toggleCheckbox}/>
           <Button
             style={styles.button}
             onPress={handleSave}
@@ -136,7 +74,6 @@ const EditScreen = ({ route, navigation }) => {
             Save
           </Button>
         </View>
-        </ScrollView>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>
   );

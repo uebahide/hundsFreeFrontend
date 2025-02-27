@@ -182,8 +182,7 @@ const RecordingScreen = ({ navigation, route }) => {
         responseData: {
           hun: responseData.hun,
           eng: responseData.eng,
-        },
-        navigateTo: "RecordingScreen",
+        }
       });
     } catch (e) {
       console.log("Error fetching data:", e);
