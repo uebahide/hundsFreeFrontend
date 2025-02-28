@@ -11,7 +11,7 @@ const QuestionList = ({changeAnswer, questions}) => {
     <View style={styles.container}>
       <View style={styles.innerContainer}>
         {questions.map((q, index) =>{
-          if(q.type=='button'){
+          if(q.type=='multi'){
             return (
                 <View key={q.id} style={styles.selectBoxContainer}>
                   <Text style={styles.label}>{q.question}</Text>

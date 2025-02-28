@@ -1,51 +1,72 @@
 [
   {
     "id": 1,
-    "question": "content of the question1",
-    "type": "button",
-    "possible_answers": ["a", "b", "c"],
+    "question": "Is there a queen? (Van anya?)",
+    "type": "boolean",
+    "possible_answers": ["yes (igen)", "no (nem)"],
     "answer": ""
   },
   {
     "id": 2,
-    "question": "content of the question2",
-    "type": "boolean",
-    "possible_answers": "",
+    "question": "Are there eggs? (Van pete?)",
+    "type": "multi",
+    "possible_answers": ["no (nincs)", "few (kevés)", "enough (elegendő)", "average (átlagos)", "many (sok)"],
     "answer": ""
   },
   {
     "id": 3,
-    "question": "content of the question3",
+    "question": "Is there a swarm cell? (Van rajbölcső?)",
     "type": "boolean",
-    "possible_answers": "",
+    "possible_answers": ["yes (igen)", "no (nem)"],
     "answer": ""
   },
   {
     "id": 4,
-    "question": "content of the question4",
-    "type": "textbox",
-    "possible_answers": "",
+    "question": "How many frames are covered (by bees)? (Hány keretet takarnak a méhek?)",
+    "type": "multi",
+    "possible_answers": ["few (kevés)", "average (átlagos)", "many (sok)", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     "answer": ""
   },
   {
     "id": 5,
-    "question": "content of the question5",
-    "type": "textbox",
-    "possible_answers": "",
+    "question": "How many frames are with eggs? (Hány fias keret van?)",
+    "type": "multi",
+    "possible_answers": ["few (kevés)", "average (átlagos)", "many (sok)", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     "answer": ""
   },
   {
     "id": 6,
-    "question": "content of the question6",
-    "type": "textbox",
-    "possible_answers": "",
+    "question": "How many frames are with covered cells? (Hány fedett keret van?)",
+    "type": "multi",
+    "possible_answers": ["few (kevés)", "average (átlagos)", "many (sok)", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10"],
     "answer": ""
   },
   {
     "id": 7,
-    "question": "content of the question7",
-    "type": "textbox",
-    "possible_answers": "",
+    "question": "Are bees carrying honey? (Van-e hordás?)",
+    "type": "boolean",
+    "possible_answers": ["yes (igen)", "no (nem)"],
+    "answer": ""
+  },
+  {
+    "id": 8,
+    "question": "Ready to harvest the honey? (Pergetésre érett-e?)",
+    "type": "boolean",
+    "possible_answers": ["yes (igen)", "no (nem)"],
+    "answer": ""
+  },
+  {
+    "id": 9,
+    "question": "Are there mites? (Van-e atka?)",
+    "type": "multi",
+    "possible_answers": ["no (nincs)", "few (kevés)", "many (sok)"],
+    "answer": ""
+  },
+  {
+    "id": 10,
+    "question": "Any signs of disease? (Betegség nyoma látható?)",
+    "type": "multi",
+    "possible_answers": ["no (nem)", "Nosema (Nozéma)", "Chalkbrood (Költésmeszesedés)", "Foulbrood (Költésrothadás)"],
     "answer": ""
   }
 ]
